@@ -37,7 +37,7 @@ const fetchInfo = () => {
     loading.classList.remove('hidden');
     overlay.style.display = 'block';
 
-    fetch(`https://cors-anywhere.herokuapp.com/https://www.omdbapi.com/?apikey=${apiKey}&s=${searchInfo}`)
+    fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=${searchInfo}`)
     .then(response => response.json())
     .then(data => {
         movieContainer.innerHTML = "";
@@ -63,7 +63,7 @@ const fetchInfo = () => {
 function updateMovies(data){
     const posterImg = data.Poster !== "N/A" ? data.Poster : "fallback.jpg";
 
-    fetch(`https://cors-anywhere.herokuapp.com/https://www.omdbapi.com/?apikey=${apiKey}&i=${data.imdbID}&plot=full`)
+    fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${data.imdbID}&plot=full`)
         .then(res => res.json())
         .then(fullData => {
             movieContainer.innerHTML += 
