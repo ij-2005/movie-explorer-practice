@@ -1,0 +1,1 @@
+Created a simple movie explorer with the use of API from https://developer.themoviedb.org/docs/getting-started. So huge credits for them (also credited inside the website). ApiKey is exposed, since it is just a free API, I don't really mind :D. Just practicing vanilla html css js before learning a framework, Thanks for reading!
