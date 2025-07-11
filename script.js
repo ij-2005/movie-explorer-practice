@@ -37,7 +37,7 @@ const fetchInfo = () => {
     loading.classList.remove('hidden');
     overlay.style.display = 'block';
 
-    fetch(`http://www.omdbapi.com/?apikey=${apiKey}&s=${searchInfo}`)
+    fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=${searchInfo}`)
     .then(response => response.json())
     .then(data => {
         movieContainer.innerHTML = "";
