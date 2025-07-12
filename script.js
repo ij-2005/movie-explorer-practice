@@ -20,10 +20,19 @@ const closeBtn = document.getElementById("closePopup");
 const searchBtn = document.getElementById("searchBtn");
 const searchInput = document.getElementById("inputMovie");
 
-//functionsh
 
-const addFavorites = () => {
-    console.log("whats up")
+//array 
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+//functions
+
+const isFavorite = (title) =>{
+    return favorites.some(movie => movie.title === title);
+}
+
+const addFavorites = (title, date, img, desc) => {
+    favorites.push({title, date, img, desc});
+    console.log(favorites);
 }
 
 const fetchInfo = () => {
@@ -120,7 +129,23 @@ movieContainer.addEventListener('click', (e)=>{
         popupMovie.classList.remove('hidden');
         return;
     } else if (e.target.closest('.favoriteBtn')){
-        console.log("whats up");
+
+        const movieInfo = e.target.closest('.movie');
+        const title = movieInfo.querySelector("h3").textContent;
+        const date = movieInfo.querySelectorAll("h3")[1].textContent;
+        const img = movieInfo.querySelector("img").src;
+        const desc = movieInfo.querySelector("p").textContent;
+
+        if (isFavorite(title)){ //if true
+            favorites = favorites.filter(movie => movie.title !== title);
+            movieInfo.querySelector('.favoriteBtn').innerHTML = '<i class="fa-regular fa-heart"></i>';
+            console.log(favorites);
+        } else {
+            movieInfo.querySelector('.favoriteBtn').innerHTML = '<i class="fa-solid fa-heart" style="color: #f40101;"></i>';
+            addFavorites(title, date, img, desc);
+        }
+
+        localStorage.setItem('favorites', JSON.stringify(favorites));
         return;
     }
 
