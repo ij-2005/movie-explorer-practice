@@ -14,17 +14,42 @@ const popupMovie = document.querySelector(".popupMovie");
 const overlay = document.querySelector('.popupOverlay');
 const movieContainer = document.querySelector('.movieList');
 
+
 //buttons
 
 const closeBtn = document.getElementById("closePopup");
 const searchBtn = document.getElementById("searchBtn");
 const searchInput = document.getElementById("inputMovie");
+const favoriteBtn = document.getElementById("favBtn");
 
 
 //array 
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-
+console.log(`current favorites : ${favorites}`);
 //functions
+
+function showFavorites(){
+    movieContainer.innerHTML = "";
+
+    if (favorites.length === 0){
+        movieContainer.innerHTML = "<p>There are currently no favorites!</p>";
+    }else{
+        let html = "";
+        favorites.forEach(item =>{
+            html += `<div class="movie">
+                    <img src="${item.img}" alt="${item.title} poster" />
+                    <h3>${item.title}</h3>
+                    <h3>Release: ${item.date}</h3>
+                    <p class="hidden">${item.desc}</p>
+                    <div class="buttons">
+                    <button class="toggleDetails">Details</button>
+                    <button class="favoriteBtn"><i class="fa-solid fa-heart" style="color: #f40101;"></i></button>
+                    </div>
+                </div>`
+        });
+        movieContainer.innerHTML = html;
+    }
+}
 
 const isFavorite = (title) =>{
     return favorites.some(movie => movie.title === title);
@@ -40,6 +65,7 @@ const fetchInfo = () => {
     const searchInfo = searchInput.value.trim();
     if(searchInfo === "") return;
 
+    movieContainer.innerHTML = "<h1>Searching..</h1>";
     console.log(searchInfo);
     loading.classList.remove('hidden');
     overlay.style.display = 'block';
@@ -68,6 +94,8 @@ const fetchInfo = () => {
 };
 
 function updateMovies(data){
+    const isFave = isFavorite(data.Title);
+    const heartIcon = isFave ? '<i class="fa-solid fa-heart" style="color: #f40101;"></i>' : '<i class="fa-regular fa-heart"></i>';
     const posterImg = data.Poster !== "N/A" ? data.Poster : "https://i.imgflip.com/893yt7.png";
 
     fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${data.imdbID}&plot=full`)
@@ -81,7 +109,7 @@ function updateMovies(data){
                     <p class="hidden">${fullData.Plot}</p>
                     <div class="buttons">
                     <button class="toggleDetails">Details</button>
-                    <button class="favoriteBtn"><i class="fa-regular fa-heart"></i></button>
+                    <button class="favoriteBtn">${heartIcon}</button>
                     </div>
                 </div>`;
         });
@@ -105,8 +133,18 @@ function popupUpdate(movieInfo){
 
 //listeners
 
+favoriteBtn.addEventListener('click', () => {
+    showFavorites();
+});
+
 searchBtn.addEventListener('click',()=>{
     fetchInfo();
+});
+
+searchInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    fetchInfo();
+  }
 });
 
 closeBtn.addEventListener('click',()=>{
@@ -150,4 +188,4 @@ movieContainer.addEventListener('click', (e)=>{
     }
 
 
-})
+});

@@ -68,8 +68,28 @@ main {
 }
 
 #authorLink {
+    position: relative;
     text-decoration: none;
     color: black;
+    transition: all 0.2s;
+}
+
+#authorLink::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: black;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease-in-out;
+}
+
+#authorLink:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 #backUp {
@@ -92,6 +112,10 @@ main {
     display: flex;
     justify-content: flex-end;
     gap: 5px;
+}
+
+.favoriteStyle{
+    padding: 0px 12px;
 }
 
 /* navigation input and button */
@@ -269,6 +293,16 @@ main {
         overflow-y: auto;
     }
 
+    #inputMovie {
+    width: 200px;
+}
+
+@media (max-width: 840px){
+    #inputMovie {
+    width: 180px;
+}
+}
+
 }
 @media (max-width: 768px){
 
@@ -277,6 +311,10 @@ main {
         flex-direction: column;
         gap: 50px;
     }
+
+    #inputMovie {
+    width: 200px;
+}
 
     main {
         margin-top: 70px;
