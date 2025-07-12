@@ -8,8 +8,6 @@ document.getElementById('backUp').addEventListener('click', function(e) {
 
 const apiKey = "3b54d384";
 
-
-
 //variables
 
 const popupMovie = document.querySelector(".popupMovie");
@@ -22,10 +20,10 @@ const closeBtn = document.getElementById("closePopup");
 const searchBtn = document.getElementById("searchBtn");
 const searchInput = document.getElementById("inputMovie");
 
-//functions
+//functionsh
 
-const fetchPlot = () =>{
-
+const addFavorites = () => {
+    console.log("whats up")
 }
 
 const fetchInfo = () => {
@@ -61,7 +59,7 @@ const fetchInfo = () => {
 };
 
 function updateMovies(data){
-    const posterImg = data.Poster !== "N/A" ? data.Poster : "fallback.jpg";
+    const posterImg = data.Poster !== "N/A" ? data.Poster : "https://i.imgflip.com/893yt7.png";
 
     fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${data.imdbID}&plot=full`)
         .then(res => res.json())
@@ -72,7 +70,10 @@ function updateMovies(data){
                     <h3>${data.Title}</h3>
                     <h3>Release: ${data.Year}</h3>
                     <p class="hidden">${fullData.Plot}</p>
+                    <div class="buttons">
                     <button class="toggleDetails">Details</button>
+                    <button class="favoriteBtn"><i class="fa-regular fa-heart"></i></button>
+                    </div>
                 </div>`;
         });
 
@@ -117,5 +118,11 @@ movieContainer.addEventListener('click', (e)=>{
         popupUpdate(movieInfo);
         overlay.style.display = 'block';
         popupMovie.classList.remove('hidden');
+        return;
+    } else if (e.target.closest('.favoriteBtn')){
+        console.log("whats up");
+        return;
     }
+
+
 })
