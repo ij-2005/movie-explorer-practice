@@ -3,3 +3,4 @@ Created a simple movie explorer with the use of API from https://developer.themo
 ---
 
 extra message, just recently learned that github doesn't accept apis from a http only api. I would update soon! it only works locally for now
+https://ij-2005.github.io/movie-explorer-practice/
